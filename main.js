@@ -61,7 +61,7 @@ function createWindow() {
         });
 
 
-        mainWindow.loadURL(appUrl);
+        mainWindow.loadURL(appUrl, {"extraHeaders" : "pragma: no-cache\n"});
        
         // mainWindow.webContents.openDevTools();
 
@@ -78,22 +78,22 @@ function createWindow() {
             killProcess(e);
         });
     };
-    openWindow();
-    // const startUp = function () {
-    //     const requestPromise = require('minimal-request-promise');
+    // openWindow();
+    const startUp = function () {
+        const requestPromise = require('minimal-request-promise');
 
-    //     requestPromise.get(appUrl).then(function (response) {
-    //         openWindow();
+        requestPromise.get(appUrl).then(function (response) {
+            openWindow();
 
-    //     }, function (response) {
-    //         console.log('Waiting for the server start... ' + response);
+        }, function (response) {
+            console.log('Waiting for the server start... ' + response);
 
-    //         setTimeout(function () {
-    //             startUp();
-    //         }, 200);
-    //     });
-    // };
-    // startUp();
+            setTimeout(function () {
+                startUp();
+            }, 200);
+        });
+    };
+    startUp();
 }
 
 // app.commandLine.appendSwitch('ignore-certificate-errors');  
