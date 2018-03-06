@@ -2,6 +2,8 @@ const electron = require('electron')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 
+let child = require('child_process').execFile
+
 let template = [
     {
         label: '编辑',
@@ -127,6 +129,56 @@ let template = [
                 app.emit('activate')
             }
         }]
+    },
+    {
+        label: '常用工具',
+        submenu: [
+            {
+            label: "SketchUp",
+            click: function() {
+                electron.shell.openItem('/Applications/SketchUp 2018/SketchUp.app')
+            }
+        },
+        {
+            label: "Studio",
+            click: function() {
+                electron.shell.openItem('/Applications/CUBA Studio SE.app')
+            }
+        },
+        {
+            label: "Idea",
+            click: function() {
+                electron.shell.openItem('/Applications/IntelliJ IDEA.app')
+            }
+        },
+        {
+            label: "WebStorm",
+            click: function() {
+                electron.shell.openItem('/Applications/WebStorm.app')
+            }
+        },
+        {
+            label: "Xcode",
+            click: function() {
+                electron.shell.openItem('/Applications/Xcode.app')
+            }
+        },
+        {
+            label: "VSCODE",
+            click: function() {
+                electron.shell.openItem('/Applications/Visual Studio Code.app')
+            }
+        },
+        {
+            type: 'separator'
+        },
+        {
+            label: "Foxmail",
+            click: function() {
+                electron.shell.openItem('/Applications/Foxmail.app')
+            }
+        }
+    ]
     },
     {
         label: '安装系统服务',
