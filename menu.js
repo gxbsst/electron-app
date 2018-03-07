@@ -6,6 +6,69 @@ let child = require('child_process').execFile
 
 let template = [
     {
+        label: '操作',
+        submenu: [
+            {
+                label: '项目',
+                click: function () {
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects')
+                }
+            },
+            {
+                label: '新建项目',
+                click: function () {
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects/new')
+                }
+            },
+            {
+                label: '问题',
+                click: function () {
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/issues?query_id=7')
+                }
+            },
+            {
+                label: '新建问题',
+                click: function () {
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/issues/new')
+                }
+            },
+            {
+                label: '甘特图',
+                click: function () {
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/issues/gantt')
+                }
+            },
+            {
+                label: '日历',
+                click: function () {
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/issues/calendar')
+                }
+            }
+            
+        ]
+    },
+    {
+        label: '设置',
+        submenu: [{
+            label: '管理',
+            click: function () {
+                BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/admin')
+            }
+        },{
+            label: '配置',
+            click: function () {
+                BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/settings')
+            }
+        },
+        {
+            label: '新建用户',
+            click: function () {
+                BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/users/new')
+            }
+        }
+    ]
+    },
+    {
         label: '编辑',
         submenu: [{
             label: '撤销',
@@ -61,51 +124,51 @@ let template = [
             label: 'Back',
             accelerator: 'CmdOrCtrl+B',
             click: function (item, focusedWindow) {
-              if (focusedWindow) {
-                focusedWindow.webContents.goBack();
-              }
+                if (focusedWindow) {
+                    focusedWindow.webContents.goBack();
+                }
             }
-          },
-          {
+        },
+        {
             label: 'Forward',
             accelerator: 'CmdOrCtrl+F',
             click: function (item, focusedWindow) {
-              if (focusedWindow) {
-                focusedWindow.webContents.goForward();
-              }
-            }
-          },
-            {role: 'zoomin', label: '放大'},
-            {role: 'zoomout', label: '缩小'},
-            {
-                label: '切换全屏',
-                accelerator: (function () {
-                    if (process.platform === 'darwin') {
-                        return 'Ctrl+Command+F'
-                    } else {
-                        return 'F11'
-                    }
-                })(),
-                click: function (item, focusedWindow) {
-                    if (focusedWindow) {
-                        focusedWindow.setFullScreen(!focusedWindow.isFullScreen())
-                    }
-                }
-            }, {
-                label: '切换开发者工具',
-                accelerator: (function () {
-                    if (process.platform === 'darwin') {
-                        return 'Alt+Command+I'
-                    } else {
-                        return 'Ctrl+Shift+I'
-                    }
-                })(),
-                click: function (item, focusedWindow) {
-                    if (focusedWindow) {
-                        focusedWindow.toggleDevTools()
-                    }
+                if (focusedWindow) {
+                    focusedWindow.webContents.goForward();
                 }
             }
+        },
+        { role: 'zoomin', label: '放大' },
+        { role: 'zoomout', label: '缩小' },
+        {
+            label: '切换全屏',
+            accelerator: (function () {
+                if (process.platform === 'darwin') {
+                    return 'Ctrl+Command+F'
+                } else {
+                    return 'F11'
+                }
+            })(),
+            click: function (item, focusedWindow) {
+                if (focusedWindow) {
+                    focusedWindow.setFullScreen(!focusedWindow.isFullScreen())
+                }
+            }
+        }, {
+            label: '切换开发者工具',
+            accelerator: (function () {
+                if (process.platform === 'darwin') {
+                    return 'Alt+Command+I'
+                } else {
+                    return 'Ctrl+Shift+I'
+                }
+            })(),
+            click: function (item, focusedWindow) {
+                if (focusedWindow) {
+                    focusedWindow.toggleDevTools()
+                }
+            }
+        }
         ]
     }, {
         label: '窗口',
@@ -134,51 +197,51 @@ let template = [
         label: '常用工具',
         submenu: [
             {
-            label: "SketchUp",
-            click: function() {
-                electron.shell.openItem('/Applications/SketchUp 2018/SketchUp.app')
+                label: "SketchUp",
+                click: function () {
+                    electron.shell.openItem('/Applications/SketchUp 2018/SketchUp.app')
+                }
+            },
+            {
+                label: "Studio",
+                click: function () {
+                    electron.shell.openItem('/Applications/CUBA Studio SE.app')
+                }
+            },
+            {
+                label: "Idea",
+                click: function () {
+                    electron.shell.openItem('/Applications/IntelliJ IDEA.app')
+                }
+            },
+            {
+                label: "WebStorm",
+                click: function () {
+                    electron.shell.openItem('/Applications/WebStorm.app')
+                }
+            },
+            {
+                label: "Xcode",
+                click: function () {
+                    electron.shell.openItem('/Applications/Xcode.app')
+                }
+            },
+            {
+                label: "VSCODE",
+                click: function () {
+                    electron.shell.openItem('/Applications/Visual Studio Code.app')
+                }
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: "Foxmail",
+                click: function () {
+                    electron.shell.openItem('/Applications/Foxmail.app')
+                }
             }
-        },
-        {
-            label: "Studio",
-            click: function() {
-                electron.shell.openItem('/Applications/CUBA Studio SE.app')
-            }
-        },
-        {
-            label: "Idea",
-            click: function() {
-                electron.shell.openItem('/Applications/IntelliJ IDEA.app')
-            }
-        },
-        {
-            label: "WebStorm",
-            click: function() {
-                electron.shell.openItem('/Applications/WebStorm.app')
-            }
-        },
-        {
-            label: "Xcode",
-            click: function() {
-                electron.shell.openItem('/Applications/Xcode.app')
-            }
-        },
-        {
-            label: "VSCODE",
-            click: function() {
-                electron.shell.openItem('/Applications/Visual Studio Code.app')
-            }
-        },
-        {
-            type: 'separator'
-        },
-        {
-            label: "Foxmail",
-            click: function() {
-                electron.shell.openItem('/Applications/Foxmail.app')
-            }
-        }
-    ]
+        ]
     },
     {
         label: '安装系统服务',
@@ -204,27 +267,27 @@ let template = [
                 electron.shell.openExternal('http://localhost:8080/app-webstart/software/WSRFID_Connector.exe')
             }
         },
-            {
-                label: 'WS-PRINTER-SERVICE',
+        {
+            label: 'WS-PRINTER-SERVICE',
 
-                click: function () {
-                    electron.shell.openExternal('http://localhost:8080/app-webstart/software/WSPrinter_setup.exe')
-                }
-            },
-            {
-                label: 'HMI',
-
-                click: function () {
-                    electron.shell.openExternal('http://localhost:8080/app-webstart/App.jnlp')
-                }
-            },
-            {
-                label: '客户端',
-
-                click: function () {
-                    electron.shell.openExternal('http://www.wenshidata.com')
-                }
+            click: function () {
+                electron.shell.openExternal('http://localhost:8080/app-webstart/software/WSPrinter_setup.exe')
             }
+        },
+        {
+            label: 'HMI',
+
+            click: function () {
+                electron.shell.openExternal('http://localhost:8080/app-webstart/App.jnlp')
+            }
+        },
+        {
+            label: '客户端',
+
+            click: function () {
+                electron.shell.openExternal('http://www.wenshidata.com')
+            }
+        }
         ]
     },
     {
@@ -280,9 +343,9 @@ if (process.platform === 'darwin') {
     template[3].submenu.push({
         type: 'separator'
     }, {
-        label: '前置所有',
-        role: 'front'
-    })
+            label: '前置所有',
+            role: 'front'
+        })
 
     addUpdateMenuItems(template[0].submenu, 1)
 }
@@ -292,7 +355,7 @@ if (process.platform === 'win32') {
     addUpdateMenuItems(helpMenu, 0)
 }
 
-function addUpdateMenuItems (items, position) {
+function addUpdateMenuItems(items, position) {
     if (process.mas) return
 
     const version = electron.app.getVersion()

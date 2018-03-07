@@ -61,7 +61,7 @@ function createWindow() {
         });
 
 
-        mainWindow.loadURL(appUrl, {"extraHeaders" : "pragma: no-cache\n"});
+        mainWindow.loadURL(appUrl);
        
         // mainWindow.webContents.openDevTools();
 
