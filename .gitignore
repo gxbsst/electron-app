@@ -2,3 +2,4 @@ node_modules
 文什数据项目管理-darwin-x64
 .DS_Store
 build
+*.dmg
