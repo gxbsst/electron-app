@@ -1,11 +1,10 @@
-const {app, BrowserWindow, Menu} = require('electron');
+const {app, BrowserWindow, Menu, session, remote} = require('electron');
 let spawn = require('child_process').spawn;
 let mainWindow;
 let serverProcess;
 var path = require('path');
 
 let template = require('./menu');
-
 
 const menu = Menu.buildFromTemplate(template)
 Menu.setApplicationMenu(menu)
@@ -77,6 +76,14 @@ function createWindow() {
         mainWindow.on('close', function (e) {
             killProcess(e);
         });
+
+        // 清除http cache
+        mainWindow.webContents.on('did-finish-load', function() {
+        
+            mainWindow.webContents.session.clearCache(function(){
+                //some callback.
+                });
+          })
     };
     // openWindow();
     const startUp = function () {
@@ -116,6 +123,7 @@ app.on('activate', () => {
 app.on('will-quit', (e) => {
     killProcess(e);
 });
+
 
 
 
