@@ -381,7 +381,15 @@ function addUpdateMenuItems(items, position) {
         click: function () {
             require('electron').autoUpdater.quitAndInstall()
         }
-    }]
+    },
+    {
+        label: '设置',
+        accelerator: 'Command+,',
+        click: function () {
+            BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/settings')
+        }
+    }
+]
 
     items.splice.apply(items, [position, 0].concat(updateItems))
 }
