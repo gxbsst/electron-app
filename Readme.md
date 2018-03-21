@@ -12,3 +12,7 @@ dmg
 
 ./node_modules/.bin/electron-installer-dmg /Users/weston/electron
 打包/build/文什数据项目管理-darwin-x64/文什数据项目管理.app ws-project-manager
+
+setup.exe
+
+node .w_install.js
