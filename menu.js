@@ -1,15 +1,109 @@
 const electron = require('electron')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
-
+var path = require('path');
 let child = require('child_process').execFile
 
 let template = [
+    {
+        label: '工具',
+        submenu: [
+            {
+                label:'JENKINS',
+                click: function(){
+                    let mainWindow = new BrowserWindow({
+                        title: '文什项目管理',
+                        width: 800,
+                        height: 600,
+                        webPreferences: {
+                            // allowRunningInsecureContent: true,
+                            // webSecurity: false,
+                            preload: path.resolve('./preload.js'),
+                            nodeIntegration: false //doesn't matter if node integration turned off or on, same result
+                        }
+                    });
+                    mainWindow.loadURL('http://fap.wenshidata.com:9999') 
+                }
+            }
+        ]
+    },
+    {
+        label: '工程',
+        submenu: [
+            {
+                label:'FAP',
+                click: function(){
+                  
+                    let mainWindow = new BrowserWindow({
+                        title: '文什项目管理',
+                        width: 800,
+                        height: 600,
+                        webPreferences: {
+                            // allowRunningInsecureContent: true,
+                            // webSecurity: false,
+                            preload: path.resolve('./preload.js'),
+                            nodeIntegration: false //doesn't matter if node integration turned off or on, same result
+                        }
+                    });
+                   mainWindow.loadURL('http://fap.wenshidata.com:8882/fap/') 
+                    // BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com:8882/fap/') 
+                    
+                }
+            },
+            {
+                label:'SCT',
+                click: function(){
+                    let mainWindow = new BrowserWindow({
+                        title: '文什项目管理',
+                        width: 800,
+                        height: 600,
+                        webPreferences: {
+                            // allowRunningInsecureContent: true,
+                            // webSecurity: false,
+                            preload: path.resolve('./preload.js'),
+                            nodeIntegration: false //doesn't matter if node integration turned off or on, same result
+                        }
+                    });
+                    mainWindow.loadURL('http://fap.wenshidata.com:8080/app/#!') 
+                }
+            }
+        ]
+    },
+    {
+        label: '项目管理',
+        submenu: [
+            {
+                label:'富朗特',
+                click: function(){
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects/fap/issues?query_id=6') 
+                }
+            },
+            {
+                label:'SCT',
+                click: function(){
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects/f-sct/issues?query_id=6') 
+                }
+            },
+            {
+                label:'FAP',
+                click: function(){
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects/faq/issues?query_id=6') 
+                }
+            },
+            {
+                label:'移动端',
+                click: function(){
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects/far/issues?query_id=6') 
+                }
+            }
+        ]
+    },
     {
         label: '操作',
         submenu: [
             {
                 label: '项目',
+                accelerator: 'CmdOrCtrl+H',
                 click: function () {
                     BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects')
                 }
@@ -244,7 +338,7 @@ let template = [
         ]
     },
     {
-        label: '安装系统服务',
+        label: '系统',
 
         submenu: [{
             label: 'WS-OPC-CONNECTOR',
