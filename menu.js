@@ -2,16 +2,15 @@ const electron = require('electron')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 var path = require('path');
-let child = require('child_process').execFile
 
 let template = [
     {
         label: '工具',
         submenu: [
             {
-                label:'JENKINS',
+                label: 'JENKINS',
                 accelerator: 'Shift+CmdOrCtrl+J',
-                click: function(){
+                click: function () {
                     let mainWindow = new BrowserWindow({
                         title: 'JENKINS',
                         width: 800,
@@ -23,13 +22,13 @@ let template = [
                             nodeIntegration: false //doesn't matter if node integration turned off or on, same result
                         }
                     });
-                    mainWindow.loadURL('http://fap.wenshidata.com:9999') 
+                    mainWindow.loadURL('http://fap.wenshidata.com:9999')
                 }
             },
             {
-                label:'CODE',
+                label: 'CODE',
                 accelerator: 'Shift+CmdOrCtrl+C',
-                click: function(){
+                click: function () {
                     let mainWindow = new BrowserWindow({
                         title: 'CODE',
                         width: 800,
@@ -41,7 +40,7 @@ let template = [
                             nodeIntegration: false //doesn't matter if node integration turned off or on, same result
                         }
                     });
-                    mainWindow.loadURL('https://code.wenshidata.com') 
+                    mainWindow.loadURL('https://code.wenshidata.com')
                 }
             }
         ]
@@ -50,9 +49,9 @@ let template = [
         label: '工程',
         submenu: [
             {
-                label:'FAP',
-                click: function(){
-                  
+                label: 'FAP',
+                click: function () {
+
                     let mainWindow = new BrowserWindow({
                         title: '文什项目管理',
                         width: 800,
@@ -64,14 +63,14 @@ let template = [
                             nodeIntegration: false //doesn't matter if node integration turned off or on, same result
                         }
                     });
-                   mainWindow.loadURL('http://fap.wenshidata.com:8882/fap/') 
+                    mainWindow.loadURL('http://fap.wenshidata.com:8882/fap/')
                     // BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com:8882/fap/') 
-                    
+
                 }
             },
             {
-                label:'SCT',
-                click: function(){
+                label: 'SCT',
+                click: function () {
                     let mainWindow = new BrowserWindow({
                         title: '文什项目管理',
                         width: 800,
@@ -83,7 +82,7 @@ let template = [
                             nodeIntegration: false //doesn't matter if node integration turned off or on, same result
                         }
                     });
-                    mainWindow.loadURL('http://fap.wenshidata.com:8080/app/#!') 
+                    mainWindow.loadURL('http://fap.wenshidata.com:8080/app/#!')
                 }
             }
         ]
@@ -92,31 +91,38 @@ let template = [
         label: '项目管理',
         submenu: [
             {
-                label:'富朗特',
+                label: '富朗特',
                 accelerator: 'CmdOrCtrl+1',
-                click: function(){
-                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects/fap/issues?query_id=6') 
+                click: function () {
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects/fap/issues?query_id=6&per_page=100')
                 }
             },
             {
-                label:'SCT',
+                label: 'SCT',
                 accelerator: 'CmdOrCtrl+2',
-                click: function(){
-                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects/f-sct/issues?query_id=6') 
+                click: function () {
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects/f-sct/issues?query_id=6&per_page=100')
                 }
             },
             {
-                label:'FAP',
+                label: 'FAP',
                 accelerator: 'CmdOrCtrl+3',
-                click: function(){
-                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects/faq/issues?query_id=6') 
+                click: function () {
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects/faq/issues?query_id=6&per_page=100')
                 }
             },
             {
-                label:'移动端',
+                label: '移动端',
                 accelerator: 'CmdOrCtrl+4',
-                click: function(){
-                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects/far/issues?query_id=6') 
+                click: function () {
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects/far/issues?query_id=6&per_page=100')
+                }
+            },
+            {
+                label: '个人文档',
+                accelerator: 'CmdOrCtrl+5',
+                click: function () {
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects/f-scz/dmsf')
                 }
             }
         ]
@@ -161,7 +167,7 @@ let template = [
                     BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/issues/calendar')
                 }
             }
-            
+
         ]
     },
     {
@@ -171,7 +177,7 @@ let template = [
             click: function () {
                 BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/admin')
             }
-        },{
+        }, {
             label: '配置',
             click: function () {
                 BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/settings')
@@ -182,8 +188,16 @@ let template = [
             click: function () {
                 BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/users/new')
             }
+        },
+        {
+            label: '编辑菜单',
+            click: function () {
+                console.error(app.getAppPath())
+                let p = path.join(__dirname, 'menu.js')
+                electron.shell.openItem(p)
+            }
         }
-    ]
+        ]
     },
     {
         label: '编辑',
@@ -408,6 +422,65 @@ let template = [
         ]
     },
     {
+        label: '学习',
+        submenu: [
+            {
+                label: 'Pluralsight',
+                // accelerator: 'Shift+CmdOrCtrl+J',
+                click: function () {
+                    let mainWindow = new BrowserWindow({
+                        title: 'Pluralsight',
+                        width: 800,
+                        height: 600,
+                        webPreferences: {
+                            // allowRunningInsecureContent: true,
+                            // webSecurity: false,
+                            preload: path.resolve('./preload.js'),
+                            nodeIntegration: false //doesn't matter if node integration turned off or on, same result
+                        }
+                    });
+                    mainWindow.loadURL('https://app.pluralsight.com')
+                }
+            },
+            {
+                label: 'TeamTreeHouse',
+                // accelerator: 'Shift+CmdOrCtrl+J',
+                click: function () {
+                    let mainWindow = new BrowserWindow({
+                        title: 'TeamTreeHouse',
+                        width: 800,
+                        height: 600,
+                        webPreferences: {
+                            // allowRunningInsecureContent: true,
+                            // webSecurity: false,
+                            preload: path.resolve('./preload.js'),
+                            nodeIntegration: false //doesn't matter if node integration turned off or on, same result
+                        }
+                    });
+                    mainWindow.loadURL('https://teamtreehouse.com/library')
+                }
+            },
+            {
+                label: 'frontendmasters',
+                // accelerator: 'Shift+CmdOrCtrl+J',
+                click: function () {
+                    let mainWindow = new BrowserWindow({
+                        title: 'frontendmasters',
+                        width: 800,
+                        height: 600,
+                        webPreferences: {
+                            // allowRunningInsecureContent: true,
+                            // webSecurity: false,
+                            preload: path.resolve('./preload.js'),
+                            nodeIntegration: false //doesn't matter if node integration turned off or on, same result
+                        }
+                    });
+                    mainWindow.loadURL('https://frontendmasters.com/')
+                }
+            },
+        ]
+    },
+    {
         label: '帮助',
         role: 'help',
         submenu: [{
@@ -506,7 +579,7 @@ function addUpdateMenuItems(items, position) {
             BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/settings')
         }
     }
-]
+    ]
 
     items.splice.apply(items, [position, 0].concat(updateItems))
 }
