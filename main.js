@@ -60,7 +60,7 @@ function createWindow() {
         });
 
 
-        mainWindow.loadURL(appUrl);
+        mainWindow.loadURL(appUrl, {userAgent: 'Chrome'});
        
         // mainWindow.webContents.openDevTools();
 

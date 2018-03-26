@@ -42,6 +42,23 @@ let template = [
                     });
                     mainWindow.loadURL('https://code.wenshidata.com')
                 }
+            },
+            {
+                label: 'APPCENTER',
+                click: function () {
+                    let mainWindow = new BrowserWindow({
+                        title: 'APPCENTER',
+                        width: 800,
+                        height: 600,
+                        webPreferences: {
+                            // allowRunningInsecureContent: true,
+                            // webSecurity: false,
+                            preload: path.resolve('./preload.js'),
+                            nodeIntegration: false //doesn't matter if node integration turned off or on, same result
+                        }
+                    });
+                    mainWindow.loadURL('https://appcenter.ms/apps')
+                }
             }
         ]
     },
@@ -134,11 +151,12 @@ let template = [
                 label: '项目',
                 accelerator: 'Shift+CmdOrCtrl+H',
                 click: function () {
-                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects')
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/admin/projects')
                 }
             },
             {
                 label: '新建项目',
+                accelerator: 'Shift+CmdOrCtrl+N',
                 click: function () {
                     BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects/new')
                 }
@@ -151,8 +169,9 @@ let template = [
             },
             {
                 label: '新建问题',
+                accelerator: 'CmdOrCtrl+N',
                 click: function () {
-                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/issues/new')
+                    BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com/projects/fap/issues/new')
                 }
             },
             {
@@ -194,6 +213,14 @@ let template = [
             click: function () {
                 console.error(app.getAppPath())
                 let p = path.join(__dirname, 'menu.js')
+                electron.shell.openItem(p)
+            }
+        },
+        {
+            label: '编辑MAIN',
+            click: function () {
+                console.error(app.getAppPath())
+                let p = path.join(__dirname, 'main.js')
                 electron.shell.openItem(p)
             }
         }
@@ -478,6 +505,63 @@ let template = [
                     mainWindow.loadURL('https://frontendmasters.com/')
                 }
             },
+            {
+                label: 'jhipster',
+                click: function() {
+                    electron.shell.openExternal('https://www.jhipster.tech') 
+                }
+            },
+            {
+                label: 'jdl-studio',
+                click: function() {
+                    let mainWindow = new BrowserWindow({
+                        title: 'jdl-studio',
+                        width: 800,
+                        height: 600,
+                        webPreferences: {
+                            // allowRunningInsecureContent: true,
+                            // webSecurity: false,
+                            preload: path.resolve('./preload.js'),
+                            nodeIntegration: false //doesn't matter if node integration turned off or on, same result
+                        }
+                    });
+                    mainWindow.loadURL('https://start.jhipster.tech/jdl-studio/')
+                }
+            },
+            {
+                label: 'Google',
+                click: function() {
+                    let mainWindow = new BrowserWindow({
+                        title: 'Google',
+                        width: 800,
+                        height: 600,
+                        webPreferences: {
+                            // allowRunningInsecureContent: true,
+                            // webSecurity: false,
+                            preload: path.resolve('./preload.js'),
+                            nodeIntegration: false //doesn't matter if node integration turned off or on, same result
+                        }
+                    });
+                    mainWindow.loadURL('https://www.google.com/')
+                }
+            },
+            {
+                label: 'Baidu',
+                click: function() {
+                    let mainWindow = new BrowserWindow({
+                        title: 'Baidu',
+                        width: 800,
+                        height: 600,
+                        webPreferences: {
+                            // allowRunningInsecureContent: true,
+                            // webSecurity: false,
+                            preload: path.resolve('./preload.js'),
+                            nodeIntegration: false //doesn't matter if node integration turned off or on, same result
+                        }
+                    });
+                    mainWindow.loadURL('https://www.Baidu.com/')
+                }
+            }
         ]
     },
     {
@@ -488,6 +572,7 @@ let template = [
             click: function () {
                 electron.shell.openExternal('http://www.wenshidata.com')
             }
+           
         }]
     }
 ]
