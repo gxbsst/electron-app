@@ -6,6 +6,7 @@
   "description": "WENSHI Platform Electron Demo",
   "repository": "https://github.com/cuba-labs/cuba-electron-demo",
   "dependencies": {
+    "electron-context-menu": "^0.9.1",
     "electron-editor-context-menu": "^1.1.1",
     "minimal-request-promise": "^1.4.0",
     "tree-kill": "^1.1.0"
