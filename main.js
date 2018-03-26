@@ -1,8 +1,9 @@
-const {app, BrowserWindow, Menu, session, remote} = require('electron');
+const {app, BrowserWindow, Menu, session, remote, WebView} = require('electron');
 let spawn = require('child_process').spawn;
 let mainWindow;
 let serverProcess;
 var path = require('path');
+
 
 let template = require('./menu');
 
@@ -11,6 +12,21 @@ Menu.setApplicationMenu(menu)
 
 let platform = process.platform;
 
+require('electron-context-menu')({
+    window: WebView,
+    prepend: (params, browserWindow) => [{
+        labels: {
+            cut: '剪切',
+            copy: '复制',
+            paste: '粘贴',
+            save: '保存图片',
+            copyLink: '复杂链接',
+            inspect: 'inspect'
+        },
+        // Only show it when right-clicking images
+        visible: params.mediaType === 'image'
+    }]
+}); 
 
 function killProcess(e) {
     // if (platform === 'win32') {
@@ -59,8 +75,7 @@ function createWindow() {
             }
         });
 
-
-        mainWindow.loadURL(appUrl, {userAgent: 'Chrome'});
+        mainWindow.loadURL(appUrl);
        
         // mainWindow.webContents.openDevTools();
 
@@ -123,7 +138,3 @@ app.on('activate', () => {
 app.on('will-quit', (e) => {
     killProcess(e);
 });
-
-
-
-

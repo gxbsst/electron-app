@@ -452,6 +452,24 @@ let template = [
         label: '学习',
         submenu: [
             {
+                label: 'Bookmarks',
+                // accelerator: 'Shift+CmdOrCtrl+J',
+                click: function () {
+                    let mainWindow = new BrowserWindow({
+                        title: 'Pluralsight',
+                        width: 800,
+                        height: 600,
+                        webPreferences: {
+                            // allowRunningInsecureContent: true,
+                            // webSecurity: false,
+                            preload: path.resolve('./preload.js'),
+                            nodeIntegration: false //doesn't matter if node integration turned off or on, same result
+                        }
+                    });
+                    mainWindow.loadURL('https://www.google.com.hk/bookmarks/?pli=1')
+                }  
+            },
+            {
                 label: 'Pluralsight',
                 // accelerator: 'Shift+CmdOrCtrl+J',
                 click: function () {
