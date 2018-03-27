@@ -4,9 +4,7 @@ import {IonicApp, IonicModule, Config} from "ionic-angular";
 import {IonicStorageModule} from "@ionic/storage";
 import {MyApp} from "./app.component";
 import {TabModule} from "../pages/tabs/tab.module";
-import {LoginModule} from "../pages/login/login.module";
 import {HomeModule} from "../pages/home/home.module";
-import {MineModule} from "../pages/mine/mine.module";
 import {StatusBar} from "@ionic-native/status-bar";
 import {SplashScreen} from "@ionic-native/splash-screen";
 import {AppVersion} from "@ionic-native/app-version";
@@ -30,9 +28,7 @@ import {HttpService} from "../providers/HttpService";
 import {FileService} from "../providers/FileService";
 import {Helper} from "../providers/Helper";
 import {Utils} from "../providers/Utils";
-import {TestModule} from "../pages/test/test.module";
 import {HttpModule} from "@angular/http";
-import {DemoModule} from "../pages/demo/demo.module";
 import {GlobalData} from "../providers/GlobalData";
 import {IS_DEBUG, FUNDEBUG_API_KEY} from "../providers/Constants";
 import {Logger} from "../providers/Logger";
@@ -66,11 +62,7 @@ export class FunDebugErrorHandler implements ErrorHandler {
     }),
     IonicStorageModule.forRoot(),
     TabModule,
-    LoginModule,
     HomeModule,
-    DemoModule,
-    MineModule,
-    TestModule,
     CalendarModule
   ],
   bootstrap: [IonicApp],

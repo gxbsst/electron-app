@@ -3,14 +3,12 @@ import {Storage} from "@ionic/storage";
 import {Platform, IonicApp, Nav, ModalController, Keyboard, ToastController, Events} from "ionic-angular";
 import {NativeService} from "../providers/NativeService";
 import {TabsPage} from "../pages/tabs/tabs";
-import {LoginPage} from "../pages/login/login";
 import {Helper} from "../providers/Helper";
 import {GlobalData} from "../providers/GlobalData";
 import {Utils} from "../providers/Utils";
 import {CommonService} from "../service/CommonService";
 import {VersionService} from "../providers/VersionService";
 import {UserInfo} from '../model/UserInfo';
-import {AboutPage} from '../pages/mine/about/about';
 
 @Component({
   templateUrl: 'app.html'
@@ -51,7 +49,7 @@ export class MyApp {
             this.helper.loginSuccessHandle(userInfo);
           });
         } else {
-          this.modalCtrl.create(LoginPage).present();
+          // this.modalCtrl.create(LoginPage).present();
         }
       });
       this.registerBackButtonAction();//注册android返回按键事件
@@ -127,7 +125,7 @@ export class MyApp {
         let tab = tabs.getSelected();//获取选中的tab
         let activeVC = tab.getActive();//通过当前选中的tab获取ViewController
         let activeNav = activeVC.getNav();//通过当前视图的ViewController获取的NavController
-        activeNav.push(AboutPage);//跳转到指定页面
+        // activeNav.push(AboutPage);//跳转到指定页面
       });
     });
   }
