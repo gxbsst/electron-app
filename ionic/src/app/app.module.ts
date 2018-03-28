@@ -41,6 +41,8 @@ import {SctPageModule} from "../pages/sct/sct.module";
 import * as fundebug from "fundebug-javascript";
 import {DetailPageModule} from "../pages/detail/detail.module";
 import {NgZorroAntdModule} from "ng-zorro-antd";
+import {ElectronService} from "ngx-electron";
+import {ElectronIpcService} from "../service/electronipc-service";
 
 fundebug.apikey = FUNDEBUG_API_KEY;
 fundebug.releasestage = IS_DEBUG ? 'development' : 'production';//应用开发阶段，development:开发;production:生产
@@ -99,7 +101,9 @@ export class FunDebugErrorHandler implements ErrorHandler {
         GlobalData,
         Logger,
         CommonService,
-        VersionService
+        VersionService,
+        ElectronService,
+        ElectronIpcService,
     ]
 })
 export class AppModule {

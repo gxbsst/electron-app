@@ -10,6 +10,7 @@ import {Utils} from "../providers/Utils";
 import {CommonService} from "../service/CommonService";
 import {VersionService} from "../providers/VersionService";
 import {UserInfo} from '../model/UserInfo';
+import {ElectronService} from "ngx-electron";
 
 @Component({
   templateUrl: 'app.html'
@@ -30,8 +31,10 @@ export class MyApp {
               private events: Events,
               private commonService: CommonService,
               private versionService: VersionService,
+              private electron: ElectronService,
               private nativeService: NativeService) {
     platform.ready().then(() => {
+      this.onReady();
       this.nativeService.statusBarStyle();
       this.nativeService.splashScreenHide();
       this.assertNetwork();//检测网络
@@ -131,4 +134,35 @@ export class MyApp {
     });
   }
 
+    onReady() {
+        // Okay, so the platform is ready and our plugins are available.
+        // Here you can do any higher level native things you might need.
+        // StatusBar.styleDefault();
+        // Splashscreen.hide();
+
+        this.setupIpc();
+    }
+
+    setupIpc() {
+
+    debugger
+        if (this.electron.isElectronApp) {
+
+            console.log('Electron shell detected.');
+            this.electron.ipcRenderer.on('onMap', () => {
+
+              this.nav.setRoot(HomePage)
+            });
+            this.electron.ipcRenderer.on('onLocations', () => this.nav.setRoot('AddressListPage'));
+            this.electron.ipcRenderer.on('onPrefs', () => this.nav.setRoot('SetupPage'));
+            // this.electron.ipcRenderer.on('onProvision', async (evt, address: Address) => {
+            //     await this.addressService.provision(address)
+            //     this.nav.setRoot(HomePage, { address })
+            // });
+            // this.electron.ipcRenderer.on('license', async (evt, license) => {
+            //     console.log(license);
+            //     await this.storage.setLicense(license);
+            // });
+        }
+    }
 }
