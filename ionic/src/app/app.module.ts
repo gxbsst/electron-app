@@ -40,6 +40,7 @@ import {SctPageModule} from "../pages/sct/sct.module";
 //参考文档:https://docs.fundebug.com/notifier/javascript/framework/ionic2.html
 import * as fundebug from "fundebug-javascript";
 import {DetailPageModule} from "../pages/detail/detail.module";
+import {NgZorroAntdModule} from "ng-zorro-antd";
 
 fundebug.apikey = FUNDEBUG_API_KEY;
 fundebug.releasestage = IS_DEBUG ? 'development' : 'production';//应用开发阶段，development:开发;production:生产

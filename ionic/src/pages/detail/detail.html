@@ -14,6 +14,45 @@
 
 
 <ion-content padding>
+
+  <button nz-button [nzType]="'primary'" (click)="showModal()">
+    <span>显示对话框</span>
+  </button>
+  <nz-modal [nzVisible]="isVisible" [nzTitle]="'第一个 Modal'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)">
+    <ng-template #modalContent>
+      <p>对话框的内容</p>
+      <p>对话框的内容</p>
+      <p>对话框的内容</p>
+    </ng-template>
+  </nz-modal>
+
+
+  <nz-table #nzTable [nzDataSource]="data" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus()" (nzPageSizeChange)="_refreshStatus()">
+    <thead nz-thead>
+    <tr>
+      <th nz-th nzCheckbox>
+        <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll($event)">
+        </label>
+      </th>
+      <th nz-th><span>Name</span></th>
+      <th nz-th><span>Age</span></th>
+      <th nz-th><span>Address</span></th>
+    </tr>
+    </thead>
+    <tbody nz-tbody>
+    <tr nz-tbody-tr *ngFor="let data of nzTable.data">
+      <td nz-td nzCheckbox>
+        <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="_refreshStatus($event)">
+        </label>
+      </td>
+      <td nz-td>
+        <a>{{data.name}}</a>
+      </td>
+      <td nz-td>{{data.age}}</td>
+      <td nz-td>{{data.address}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
   <p>Jenkins SU</p>
   sudo su -s /bin/bash jenkins
   SCT 测试URL
