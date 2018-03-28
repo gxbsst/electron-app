@@ -13,19 +13,19 @@
         </button>
         <ion-fab-list side="right">
             <button ion-fab (click)="goto(fab, 'http://fap.wenshidata.com')">
-                <ion-icon name="cog"></ion-icon>
+
                 M
             </button>
             <button ion-fab (click)="goto(fab, 'http://fap.wenshidata.com:8882/fap')">
-                <ion-icon name="locate"></ion-icon>
+
                 FAP
             </button>
             <button ion-fab (click)="goto(fab, 'http://fap.wenshidata.com:8080/app')">
-                <ion-icon name="locate"></ion-icon>
+
                 SCT
             </button>
             <button ion-fab (click)="goto(fab, 'http://fap.wenshidata.com:8100')">
-                <ion-icon name="locate"></ion-icon>
+
                 APP
             </button>
         </ion-fab-list>
@@ -34,7 +34,7 @@
     <ion-grid>
         <ion-row>
             <ion-col col-4>
-                <ion-item tappable (click)="showTodos()" text-center no-lines>
+                <ion-item tappable (click)="showSct()" text-center no-lines>
                     <ion-icon name='ios-checkbox-outline'></ion-icon>
                     <h2>FAP</h2>
                 </ion-item>

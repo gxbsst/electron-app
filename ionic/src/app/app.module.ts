@@ -1,6 +1,6 @@
-import {NgModule, ErrorHandler} from "@angular/core";
+import {ErrorHandler, NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
-import {IonicApp, IonicModule, Config} from "ionic-angular";
+import {Config, IonicApp, IonicModule} from "ionic-angular";
 import {IonicStorageModule} from "@ionic/storage";
 import {MyApp} from "./app.component";
 import {TabModule} from "../pages/tabs/tab.module";
@@ -30,83 +30,86 @@ import {Helper} from "../providers/Helper";
 import {Utils} from "../providers/Utils";
 import {HttpModule} from "@angular/http";
 import {GlobalData} from "../providers/GlobalData";
-import {IS_DEBUG, FUNDEBUG_API_KEY} from "../providers/Constants";
+import {FUNDEBUG_API_KEY, IS_DEBUG} from "../providers/Constants";
 import {Logger} from "../providers/Logger";
 import {ModalFromRightEnter, ModalFromRightLeave, ModalScaleEnter, ModalScaleLeave} from "./modal-transitions";
 import {CommonService} from "../service/CommonService";
 import {VersionService} from "../providers/VersionService";
 import {CalendarModule} from "ion2-calendar";
-
+import {SctPageModule} from "../pages/sct/sct.module";
 //参考文档:https://docs.fundebug.com/notifier/javascript/framework/ionic2.html
 import * as fundebug from "fundebug-javascript";
+import {DetailPageModule} from "../pages/detail/detail.module";
 
 fundebug.apikey = FUNDEBUG_API_KEY;
 fundebug.releasestage = IS_DEBUG ? 'development' : 'production';//应用开发阶段，development:开发;production:生产
 fundebug.silent = !IS_DEBUG;//如果暂时不需要使用Fundebug，将silent属性设为true
 
 export class FunDebugErrorHandler implements ErrorHandler {
-  handleError(err: any): void {
-    fundebug.notifyError(err);
-    console.error(err);
-  }
+    handleError(err: any): void {
+        fundebug.notifyError(err);
+        console.error(err);
+    }
 }
 
 @NgModule({
-  declarations: [MyApp],
-  imports: [
-    BrowserModule,
-    HttpModule,
-    IonicModule.forRoot(MyApp, {
-      mode: 'ios',//android是'md'
-      backButtonText: ''
-    }),
-    IonicStorageModule.forRoot(),
-    TabModule,
-    HomeModule,
-    CalendarModule
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [MyApp],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    AppVersion,
-    Camera,
-    Toast,
-    File,
-    FileTransfer,
-    FileOpener,
-    InAppBrowser,
-    ImagePicker,
-    Network,
-    AppMinimize,
-    Diagnostic,
-    HTTP,
-    JPush,
-    CodePush,
-    CallNumber,
-    BarcodeScanner,
-    {provide: ErrorHandler, useClass: FunDebugErrorHandler},
-    NativeService,
-    HttpService,
-    FileService,
-    Helper,
-    Utils,
-    GlobalData,
-    Logger,
-    CommonService,
-    VersionService
-  ]
+    declarations: [MyApp],
+    imports: [
+        BrowserModule,
+        HttpModule,
+        IonicModule.forRoot(MyApp, {
+            mode: 'ios',//android是'md'
+            backButtonText: ''
+        }),
+        IonicStorageModule.forRoot(),
+        TabModule,
+        HomeModule,
+        CalendarModule,
+        SctPageModule,
+        DetailPageModule,
+    ],
+    bootstrap: [IonicApp],
+    entryComponents: [MyApp],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        AppVersion,
+        Camera,
+        Toast,
+        File,
+        FileTransfer,
+        FileOpener,
+        InAppBrowser,
+        ImagePicker,
+        Network,
+        AppMinimize,
+        Diagnostic,
+        HTTP,
+        JPush,
+        CodePush,
+        CallNumber,
+        BarcodeScanner,
+        {provide: ErrorHandler, useClass: FunDebugErrorHandler},
+        NativeService,
+        HttpService,
+        FileService,
+        Helper,
+        Utils,
+        GlobalData,
+        Logger,
+        CommonService,
+        VersionService
+    ]
 })
 export class AppModule {
-  constructor(public config: Config) {
-    this.setCustomTransitions();
-  }
+    constructor(public config: Config) {
+        this.setCustomTransitions();
+    }
 
-  private setCustomTransitions() {
-    this.config.setTransition('modal-from-right-enter', ModalFromRightEnter);
-    this.config.setTransition('modal-from-right-leave', ModalFromRightLeave);
-    this.config.setTransition('modal-scale-enter', ModalScaleEnter);
-    this.config.setTransition('modal-scale-leave', ModalScaleLeave);
-  }
+    private setCustomTransitions() {
+        this.config.setTransition('modal-from-right-enter', ModalFromRightEnter);
+        this.config.setTransition('modal-from-right-leave', ModalFromRightLeave);
+        this.config.setTransition('modal-scale-enter', ModalScaleEnter);
+        this.config.setTransition('modal-scale-leave', ModalScaleLeave);
+    }
 }
