@@ -59,6 +59,23 @@ let template = [
                     });
                     mainWindow.loadURL('https://appcenter.ms/apps')
                 }
+            },
+              {
+                label: 'APPCENTER',
+                click: function () {
+                    let mainWindow = new BrowserWindow({
+                        title: 'APPCENTER',
+                        width: 800,
+                        height: 600,
+                        webPreferences: {
+                            // allowRunningInsecureContent: true,
+                            // webSecurity: false,
+                            preload: path.resolve('./preload.js'),
+                            nodeIntegration: false //doesn't matter if node integration turned off or on, same result
+                        }
+                    });
+                    mainWindow.loadURL('https://appcenter.ms/apps')
+                }
             }
         ]
     },
@@ -73,6 +90,9 @@ let template = [
                         title: '文什项目管理',
                         width: 800,
                         height: 600,
+                        transparent: true, 
+                        frame: true,
+                         'titleBarStyle': 'hidden',
                         webPreferences: {
                             // allowRunningInsecureContent: true,
                             // webSecurity: false,
@@ -81,6 +101,11 @@ let template = [
                         }
                     });
                     mainWindow.loadURL('http://fap.wenshidata.com:8882/fap/')
+                    mainWindow.webContents.on('did-finish-load', ()=>{
+                        let code = `let body = document.getElementsByTagName('body')[0]
+                        body.style['-webkit-app-region']='drag'`;
+                        mainWindow.webContents.executeJavaScript(code);
+                    });
                     // BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com:8882/fap/') 
 
                 }
@@ -92,6 +117,9 @@ let template = [
                         title: '文什项目管理',
                         width: 800,
                         height: 600,
+                        transparent: true, 
+                        frame: true,
+                         'titleBarStyle': 'hidden',
                         webPreferences: {
                             // allowRunningInsecureContent: true,
                             // webSecurity: false,
@@ -100,6 +128,37 @@ let template = [
                         }
                     });
                     mainWindow.loadURL('http://fap.wenshidata.com:8080/app/#!')
+                    mainWindow.webContents.on('did-finish-load', ()=>{
+                        let code = `let body = document.getElementsByTagName('body')[0]
+                        body.style['-webkit-app-region']='drag'`;
+                        mainWindow.webContents.executeJavaScript(code);
+                    });
+                }
+            },
+            {
+                label: 'APP',
+                click: function () {
+                    let mainWindow = new BrowserWindow({
+                        title: '文什项目管理',
+                        width: 375,
+                        height: 667,
+                        transparent: true, 
+                        frame: false,
+                        // 'titleBarStyle': 'hidden',
+                        webPreferences: {
+                            // allowRunningInsecureContent: true,
+                            webSecurity: false,
+                            preload: path.resolve('./preload.js'),
+                            nodeIntegration: false //doesn't matter if node integration turned off or on, same result
+                        }
+                    });
+                    mainWindow.loadURL('http://fap.wenshidata.com:8100')
+
+                    mainWindow.webContents.on('did-finish-load', ()=>{
+                        let code = `let body = document.getElementsByTagName('body')[0]
+                        body.style['-webkit-app-region']='drag'`;
+                        mainWindow.webContents.executeJavaScript(code);
+                    });
                 }
             }
         ]

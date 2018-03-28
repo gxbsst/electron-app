@@ -1,3 +1,23 @@
 page-home {
+  ion-content, .content-ios {
+    //background: #38b7c4;
+    background: url(../../assets/images/country-road.jpg) no-repeat center center fixed;
+    background-size: cover;
+  }
+  ion-icon {
+    font-size: 10em;
+    color: #ff7c00;
+  }
+  ion-col {
+    //text-align: center;
+  }
+  ion-grid {
+    margin-top: 150px;
+    ion-col {
+
+    }
+  }
+
+
 }
 

@@ -3,6 +3,7 @@ import {Storage} from "@ionic/storage";
 import {Platform, IonicApp, Nav, ModalController, Keyboard, ToastController, Events} from "ionic-angular";
 import {NativeService} from "../providers/NativeService";
 import {TabsPage} from "../pages/tabs/tabs";
+import {HomePage} from "../pages/home/home"
 import {Helper} from "../providers/Helper";
 import {GlobalData} from "../providers/GlobalData";
 import {Utils} from "../providers/Utils";
@@ -15,7 +16,7 @@ import {UserInfo} from '../model/UserInfo';
 })
 export class MyApp {
   @ViewChild('myNav') nav: Nav;
-  rootPage = TabsPage;
+  rootPage = HomePage;
   backButtonPressed: boolean = false;
 
   constructor(private platform: Platform,
@@ -38,20 +39,20 @@ export class MyApp {
       this.helper.alloyLeverInit();//本地"开发者工具"
       this.helper.initJpush();//初始化极光推送
       this.jpushOpenNotification();//处理打开推送消息事件
-      this.storage.get('token').then(token => { //从缓存中获取token
-        if (token) {
-          this.globalData.token = token;
-          this.commonService.getNewToken().mergeMap((newToken) => { //用旧token获取新token,旧token作为请求头
-            this.globalData.token = newToken;
-            this.storage.set('token', newToken);
-            return this.commonService.getUserInfo();
-          }).subscribe((userInfo:UserInfo) => {
-            this.helper.loginSuccessHandle(userInfo);
-          });
-        } else {
-          // this.modalCtrl.create(LoginPage).present();
-        }
-      });
+      // this.storage.get('token').then(token => { //从缓存中获取token
+      //   if (token) {
+      //     this.globalData.token = token;
+      //     this.commonService.getNewToken().mergeMap((newToken) => { //用旧token获取新token,旧token作为请求头
+      //       this.globalData.token = newToken;
+      //       this.storage.set('token', newToken);
+      //       return this.commonService.getUserInfo();
+      //     }).subscribe((userInfo:UserInfo) => {
+      //       this.helper.loginSuccessHandle(userInfo);
+      //     });
+      //   } else {
+      //     // this.modalCtrl.create(LoginPage).present();
+      //   }
+      // });
       this.registerBackButtonAction();//注册android返回按键事件
       this.versionService.init();//初始化版本信息
       setTimeout(() => {

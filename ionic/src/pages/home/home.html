@@ -1,3 +1,59 @@
-<ion-content>
-  home
+<ion-header>
+    <ion-navbar>
+        <ion-title>富朗特应用管理平台</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content no-padding>
+
+    <ion-fab top left #fab>
+        <button ion-fab>
+            <ion-icon name="more"></ion-icon>
+        </button>
+        <ion-fab-list side="right">
+            <button ion-fab (click)="goto(fab, 'http://fap.wenshidata.com')">
+                <ion-icon name="cog"></ion-icon>
+                M
+            </button>
+            <button ion-fab (click)="goto(fab, 'http://fap.wenshidata.com:8882/fap')">
+                <ion-icon name="locate"></ion-icon>
+                FAP
+            </button>
+            <button ion-fab (click)="goto(fab, 'http://fap.wenshidata.com:8080/app')">
+                <ion-icon name="locate"></ion-icon>
+                SCT
+            </button>
+            <button ion-fab (click)="goto(fab, 'http://fap.wenshidata.com:8100')">
+                <ion-icon name="locate"></ion-icon>
+                APP
+            </button>
+        </ion-fab-list>
+    </ion-fab>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col col-4>
+                <ion-item tappable (click)="showTodos()" text-center no-lines>
+                    <ion-icon name='ios-checkbox-outline'></ion-icon>
+                    <h2>FAP</h2>
+                </ion-item>
+            </ion-col>
+            <ion-col col-4>
+                <ion-item tappable [navPush]="newsPage" text-center no-lines>
+                    <ion-icon name='ios-globe-outline'></ion-icon>
+                    <h2>SCT</h2>
+                </ion-item>
+            </ion-col>
+            <ion-col col-4>
+                <ion-item tappable [navPush]="knowledgePage" text-center no-lines>
+                    <ion-icon name='ios-book-outline'></ion-icon>
+                    <h2>APP</h2>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
+
 </ion-content>
+  
