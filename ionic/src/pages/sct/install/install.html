@@ -1,28 +1,41 @@
-
-    <ion-grid>
-        <ion-row>
-            <ion-col col-4>
-                <ion-item  text-center no-lines>
-                    <ion-icon name='ios-albums-outline'></ion-icon>
-                    <h2>OPC</h2>
-                    <button (click)="install('opc')" ion-button full>安装</button>
-
-                </ion-item>
-            </ion-col>
-            <ion-col col-4>
-                <ion-item  text-center no-lines>
-                    <ion-icon name='ios-cog-outline'></ion-icon>
-                    <h2>RFID</h2>
-                    <button (click)="install('rfid')" ion-button full>安装</button>
-                </ion-item>
-            </ion-col>
-            <ion-col col-4>
-                <ion-item text-center no-lines>
-                    <ion-icon name='ios-phone-portrait-outline'></ion-icon>
-                    <h2>PRINTER</h2>
-                    <button (click)="install('printer')" ion-button full>安装</button>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-
-    </ion-grid>
+<nz-table #nzTable [nzDataSource]="data" [nzPageSize]="10">
+    <thead nz-thead>
+    <tr>
+        <th nz-th><span>应用名</span></th>
+        <th nz-th><span>状态</span></th>
+        <th nz-th><span>操作</span></th>
+    </tr>
+    </thead>
+    <tbody nz-tbody>
+    <tr nz-tbody-tr *ngFor="let data of nzTable.data">
+        <td nz-td>
+            <a>{{data.name}}</a>
+        </td>
+        <td nz-td>{{data.status}}</td>
+        <td nz-td>
+            <span>
+              <a href="#" (click)="install('sct')">启动</a>
+               <a href="http://localhost:8080/app">浏览</a>
+              <span nz-table-d3wsdyfriivider></span>
+              <span nz-table-divider></span>
+              <nz-dropdown>
+                <a class="ant-dropdown-link" nz-dropdown>
+                  More actions <i class="anticon anticon-down"></i>
+                </a>
+                <ul nz-menu>
+                  <li nz-menu-item>
+                    <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">1st menu item</a>
+                  </li>
+                  <li nz-menu-item>
+                    <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">2nd menu item</a>
+                  </li>
+                  <li nz-menu-item>
+                    <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">3rd menu item</a>
+                  </li>
+                </ul>
+              </nz-dropdown>
+            </span>
+        </td>
+    </tr>
+    </tbody>
+</nz-table>

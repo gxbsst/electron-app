@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "start": "electron --inspect=5858 . ",
-    "mon": "nodemon --inspec --exec \"npm start\"",
+    "mon": "nodemon --inspect=5858 --exec \"npm start\"",
     "build": "cd ionic && yarn install && yarn run ionic:build && yarn run deploy",
     "build:prod": "cd ionic && yarn install && yarn run ionic:build && yarn run deploy",
     "icons": "nicns --in app/images/icon.png --out build/icons.icns",
@@ -70,24 +70,25 @@
     ]
   },
   "dependencies": {
+    "electron-context-menu": "^0.9.1",
+    "electron-editor-context-menu": "^1.1.1",
     "electron-log": "^2.2.6",
     "electron-updater": "^2.18.2",
     "lodash": "^4.14.85",
-    "electron-context-menu": "^0.9.1",
-    "electron-editor-context-menu": "^1.1.1",
     "minimal-request-promise": "^1.4.0",
+    "portscanner": "^2.1.1",
     "tree-kill": "^1.1.0"
   },
   "devDependencies": {
+    "electron": "^2.0.0-beta.5",
     "electron-builder": "^19.4.2",
+    "electron-installer-dmg": "^0.2.1",
+    "electron-packager": "^10.1.1",
+    "electron-winstaller": "^2.6.4",
     "eslint": "^4.0.0",
     "node-icns": "0.0.4",
     "nodemon": "^1.11.0",
     "npm-run-all": "^4.0.2",
-    "rimraf": "^2.6.1",
-    "electron": "^2.0.0-beta.5",
-    "electron-installer-dmg": "^0.2.1",
-    "electron-packager": "^10.1.1",
-    "electron-winstaller": "^2.6.4"
+    "rimraf": "^2.6.1"
   }
 }

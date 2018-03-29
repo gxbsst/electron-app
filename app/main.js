@@ -5,6 +5,9 @@ const url = require('url')
 const menuManager = require('./menu-manager')
 const {autoUpdater} = require('electron-updater')
 let exec = require('child_process').exec;
+let spawn = require('child_process').spawn;
+const {execSync} = require('child_process');
+
 
 // Set up logging for updater and the app
 const log = require('electron-log')
@@ -72,6 +75,8 @@ function appReady() {
     app.dock.setIcon(path.join(iconPath, 'icon.png'))
   }
 
+  checkAppsStatus()
+
   createSplashScreen()
   initTray()
   initIpc()
@@ -87,14 +92,26 @@ function appReady() {
 
 }
 
+var portscanner = require('portscanner')
+
+function checkAppsStatus(){
+  setInterval(portScanner, 5000)
+}
+
+function portScanner() {
+  portscanner.checkPortStatus(8080, '127.0.0.1', function(error, status) {
+    debugger
+    win.webContents.send('appSctStatus', status)
+  })
+}
 
 function createSplashScreen() {
   splashScreen = new BrowserWindow({
-    width: 1024,
-    height: 768,
+    width: 800,
+    height: 600,
     titleBarStyle: 'hidden',
-    alwaysOnTop: true,
-    closable: false,
+    // alwaysOnTop: true,
+    closable: true,
     skipTaskbar: true,
     show: true,
     minimizable: false,
@@ -153,8 +170,40 @@ function initIpc() {
       let p = path.join(__dirname, 'applications', 'jre', 'mac', 'Contents', 'Home', 'bin')
       let jarPath = path.join(__dirname, 'applications')
       serverProcess = exec(p + "/java -jar " + jarPath + "/printmanager.jar", {}, function (error, stdout, stderr) {
+
       })
     }
+
+    // sct
+    if (appName === 'sct') {
+      debugger
+      let gradlewe = path.join(__dirname, '..', 'sct')
+
+      let es1 = execSync('./gradlew undeploy setupTomcat deploy',
+        {
+          cwd: app.getAppPath() + '/sct/'
+        });
+
+      exec("./catalina.sh stop", {
+        cwd: app.getAppPath() + '/sct/deploy/tomcat/bin'
+      }, function (error, stdout, stderr) {
+        debugger
+      })
+
+      exec("./catalina.sh run", {
+        cwd: app.getAppPath() + '/sct/deploy/tomcat/bin'
+      }, function (error, stdout, stderr) {
+        debugger
+      })
+
+
+      // exec("./gradlew buildElectronApp", {
+      //   cwd: app.getAppPath() + '/sct/'
+      // }, function (error, stdout, stderr) {
+      //   debugger
+      // })
+    }
+
 
   })
 }
