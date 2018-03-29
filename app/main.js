@@ -82,7 +82,7 @@ function appReady() {
 function createSplashScreen() {
   splashScreen = new BrowserWindow({
     width: 1024,
-    height: 576,
+    height: 768,
     titleBarStyle: 'hidden',
     alwaysOnTop: true,
     closable: false,
@@ -136,7 +136,7 @@ function createWindow() {
     win = new BrowserWindow({
       width: 1200,
       height: 800,
-      title: 'Dispatcher',
+      title: 'M2',
       icon: path.join(iconPath, windowIcon),
       show: false,
       webPreferences: { webSecurity: false }

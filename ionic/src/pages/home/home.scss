@@ -13,8 +13,15 @@ page-home {
   }
   ion-grid {
     margin-top: 150px;
-    ion-col {
+    .row {
+      ion-item {
+        background: #2F3E46;
+        opacity: 0.95;
+        h2 {
+          color:#FFF;
+        }
 
+      }
     }
   }
 

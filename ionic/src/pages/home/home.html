@@ -25,8 +25,10 @@
                 SCT
             </button>
             <button ion-fab (click)="goto(fab, 'http://fap.wenshidata.com:8100')">
-
                 APP
+            </button>
+            <button ion-fab (click)="goto(fab, 'http://fap.wenshidata.com:8100')">
+                下载
             </button>
         </ion-fab-list>
     </ion-fab>
@@ -34,20 +36,20 @@
     <ion-grid>
         <ion-row>
             <ion-col col-4>
-                <ion-item tappable (click)="showSct()" text-center no-lines>
-                    <ion-icon name='ios-checkbox-outline'></ion-icon>
+                <ion-item tappable (click)="showFap()" text-center no-lines>
+                    <ion-icon name='ios-albums-outline'></ion-icon>
                     <h2>FAP</h2>
                 </ion-item>
             </ion-col>
             <ion-col col-4>
-                <ion-item tappable [navPush]="newsPage" text-center no-lines>
-                    <ion-icon name='ios-globe-outline'></ion-icon>
+                <ion-item tappable (click)="showSct()" [navPush]="newsPage" text-center no-lines>
+                    <ion-icon name='ios-cog-outline'></ion-icon>
                     <h2>SCT</h2>
                 </ion-item>
             </ion-col>
             <ion-col col-4>
-                <ion-item tappable [navPush]="knowledgePage" text-center no-lines>
-                    <ion-icon name='ios-book-outline'></ion-icon>
+                <ion-item tappable (click)="showApp()" [navPush]="knowledgePage" text-center no-lines>
+                    <ion-icon name='ios-phone-portrait-outline'></ion-icon>
                     <h2>APP</h2>
                 </ion-item>
             </ion-col>

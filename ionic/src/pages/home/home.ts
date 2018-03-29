@@ -15,6 +15,7 @@ export class HomePage {
     goto(fab: FabContainer, url: string) {
         fab.close();
         window.location.href = url
+
         // this.navCtrl.push('SetupPage', {}, { animate: true, direction: 'forward' });
     }
 

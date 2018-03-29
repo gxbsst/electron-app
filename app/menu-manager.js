@@ -1,4 +1,5 @@
-const { Menu, MenuItem } = require('electron')
+const { Menu, MenuItem, BrowserWindow } = require('electron')
+let path = require('path');
 
 class MenuManager {
   constructor() {
@@ -21,10 +22,14 @@ class MenuManager {
       menu.append(new MenuItem(this.getFileMenuTemplate()))
     }
 
+    menu.append(new MenuItem(this.getAppMenuTemplate()))
+
     menu.append(new MenuItem(this.getEditMenuTemplate()))
+
     menu.append(new MenuItem(this.getViewMenuTemplate()))
     menu.append(new MenuItem(this.getWindowMenuTemplate()))
     menu.append(new MenuItem(this.getHelpMenuTemplate()))
+
 
     return menu;
   }
@@ -91,26 +96,122 @@ class MenuManager {
     }
   }
 
+  getAppMenuTemplate() {
+    return  {
+      label: '工程',
+      submenu: [
+        {
+          label: 'FAP',
+          click: function () {
+
+            let mainWindow = new BrowserWindow({
+              title: '文什项目管理',
+              width: 800,
+              height: 600,
+              transparent: true,
+              frame: true,
+              'titleBarStyle': 'hidden',
+              webPreferences: {
+                // allowRunningInsecureContent: true,
+                // webSecurity: false,
+                preload: path.resolve('./preload.js'),
+                nodeIntegration: false //doesn't matter if node integration turned off or on, same result
+              }
+            });
+            mainWindow.loadURL('http://fap.wenshidata.com:8882/fap/')
+            mainWindow.webContents.on('did-finish-load', ()=>{
+              let code = `let body = document.getElementsByTagName('body')[0]
+                        body.style['-webkit-app-region']='drag'`;
+              mainWindow.webContents.executeJavaScript(code);
+            });
+            // BrowserWindow.getFocusedWindow().loadURL('http://fap.wenshidata.com:8882/fap/')
+
+          }
+        },
+        {
+          label: 'SCT',
+          click: function () {
+            let mainWindow = new BrowserWindow({
+              title: '文什项目管理',
+              width: 800,
+              height: 600,
+              transparent: true,
+              frame: true,
+              'titleBarStyle': 'hidden',
+              webPreferences: {
+                // allowRunningInsecureContent: true,
+                // webSecurity: false,
+                preload: path.resolve('./preload.js'),
+                nodeIntegration: false //doesn't matter if node integration turned off or on, same result
+              }
+            });
+            mainWindow.loadURL('http://fap.wenshidata.com:8080/app/#!')
+            mainWindow.webContents.on('did-finish-load', ()=>{
+              let code = `let body = document.getElementsByTagName('body')[0]
+                        body.style['-webkit-app-region']='drag'`;
+              mainWindow.webContents.executeJavaScript(code);
+            });
+          }
+        },
+        {
+          label: 'APP',
+          click: function () {
+            let mainWindow = new BrowserWindow({
+              title: '文什项目管理',
+              width: 375,
+              height: 667,
+              transparent: true,
+              frame: false,
+              // 'titleBarStyle': 'hidden',
+              webPreferences: {
+                // allowRunningInsecureContent: true,
+                webSecurity: false,
+                preload: path.resolve('./preload.js'),
+                nodeIntegration: false //doesn't matter if node integration turned off or on, same result
+              }
+            });
+            mainWindow.loadURL('http://fap.wenshidata.com:8100')
+
+            mainWindow.webContents.on('did-finish-load', ()=>{
+              let code = `let body = document.getElementsByTagName('body')[0]
+                        body.style['-webkit-app-region']='drag'`;
+              mainWindow.webContents.executeJavaScript(code);
+            });
+          }
+        }
+      ]
+    }
+  }
+
+
   getEditMenuTemplate() {
     return {
-      label: 'Edit',
+      label: '编辑',
       submenu: [{
+        label: '撤销',
+        accelerator: 'CmdOrCtrl+Z',
         role: 'undo'
       }, {
+        label: '重做',
+        accelerator: 'Shift+CmdOrCtrl+Z',
         role: 'redo'
       }, {
         type: 'separator'
       }, {
+        label: '剪切',
+        accelerator: 'CmdOrCtrl+X',
         role: 'cut'
       }, {
+        label: '复制',
+        accelerator: 'CmdOrCtrl+C',
         role: 'copy'
       }, {
+        label: '粘贴',
+        accelerator: 'CmdOrCtrl+V',
         role: 'paste'
       }, {
-        role: 'pasteandmatchstyle'
-      }, {
-        role: 'delete'
-      }, {
+        label: '全选',
+        accelerator: 'CmdOrCtrl+A',
         role: 'selectall'
       }]
     }
