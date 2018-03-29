@@ -8,8 +8,8 @@
   "main": "./app/main.js",
   "private": true,
   "scripts": {
-    "start": "electron .",
-    "mon": "nodemon --exec \"npm start\"",
+    "start": "electron --inspect=5858 . ",
+    "mon": "nodemon --inspec --exec \"npm start\"",
     "build": "cd ionic && yarn install && yarn run ionic:build && yarn run deploy",
     "build:prod": "cd ionic && yarn install && yarn run ionic:build && yarn run deploy",
     "icons": "nicns --in app/images/icon.png --out build/icons.icns",

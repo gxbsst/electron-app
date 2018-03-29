@@ -11,7 +11,14 @@ export class ElectronIpcService {
    */
   updateLocationsMenu() {
     if (this.electron.ipcRenderer) {
+      // this.electron.ipcRenderer.send('Locations', addresses, provisionedId);
       this.electron.ipcRenderer.send('Locations');
     }
+  }
+
+  installApp(appName:string) {
+      if (this.electron.ipcRenderer) {
+          this.electron.ipcRenderer.send('installApp', appName);
+      }
   }
 }

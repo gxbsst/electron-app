@@ -10,20 +10,64 @@
 
 <ion-content>
 
-  <ion-list>
-    <ion-item tappable detail-push (click)="showDetail('install')">
-      <ion-label>
-        安装
-      </ion-label>
-    </ion-item>
+  <nz-layout>
+    <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+      <div class="logo">
+      </div>
+      <ul nz-menu [nzTheme]="'dark'" [nzMode]="isCollapsed?'vertical':'inline'">
+        <li nz-submenu>
+          <span title><i class="anticon anticon-user"></i><span class="nav-text">安装</span></span>
+          <ul>
 
-    <ion-item tappable detail-push>
-      <ion-label>
-        手册
-      </ion-label>
-    </ion-item>
+            <li nz-menu-item><a [routerLink] = "['/install']">OPC</a></li>
+
+            <li nz-menu-item>RFID</li>
+            <li nz-menu-item>打印</li>
+          </ul>
+        </li>
+        <li nz-submenu>
+          <span title><i class="anticon anticon-team"></i><span class="nav-text">状态</span></span>
+          <ul>
+            <li nz-menu-item>OPC</li>
+            <li nz-menu-item>RFID</li>
+            <li nz-menu-item>打印</li>
+          </ul>
+        </li>
+        <li nz-menu-item><span><i class="anticon anticon-file"></i><span class="nav-text">手册</span></span></li>
+      </ul>
+    </nz-sider>
+    <nz-layout>
+      <nz-header style="background: #fff; padding:0;">
+        <i class="anticon trigger" [class.anticon-menu-fold]="!isCollapsed" [class.anticon-menu-unfold]="isCollapsed" (click)="isCollapsed=!isCollapsed"></i>
+      </nz-header>
+      <nz-content style="margin:0 16px;">
+        <nz-breadcrumb style="margin:12px 0;">
+          <nz-breadcrumb-item>安装</nz-breadcrumb-item>
+          <nz-breadcrumb-item>OPC</nz-breadcrumb-item>
+        </nz-breadcrumb>
+        <div style="padding:24px; background: #fff; min-height: 360px;">
+
+          <router-outlet></router-outlet>
+        </div>
+      </nz-content>
+      <nz-footer style="text-align: center;"> ©2018 文什数据科技有限公司 </nz-footer>
+    </nz-layout>
+  </nz-layout>
+
+  <!--<ion-list>-->
+    <!--<ion-item tappable detail-push (click)="showDetail('install')">-->
+      <!--<ion-label>-->
+        <!--安装-->
+      <!--</ion-label>-->
+    <!--</ion-item>-->
+
+    <!--<ion-item tappable detail-push>-->
+      <!--<ion-label>-->
+        <!--手册-->
+      <!--</ion-label>-->
+    <!--</ion-item>-->
 
 
-  </ion-list>
+  <!--</ion-list>-->
 
 </ion-content>

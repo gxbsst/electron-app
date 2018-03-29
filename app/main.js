@@ -1,9 +1,10 @@
-const { app, BrowserWindow, dialog, ipcMain, Menu, Tray } = require('electron')
+const {app, BrowserWindow, dialog, ipcMain, Menu, Tray} = require('electron')
 const path = require('path')
 const fs = require('fs')
 const url = require('url')
 const menuManager = require('./menu-manager')
-const { autoUpdater } = require('electron-updater')
+const {autoUpdater} = require('electron-updater')
+let exec = require('child_process').exec;
 
 // Set up logging for updater and the app
 const log = require('electron-log')
@@ -15,30 +16,30 @@ let tray
 let splashScreen
 
 const iconPath = path.join(__dirname, 'images')
- 
+
 function initUpdater() {
- autoUpdater.on('checking-for-update', () => {
-   log.info('Checking for update...')
- })
- autoUpdater.on('update-available', (ev, info) => {
-   log.info('Update available.', info)
- })
- autoUpdater.on('update-not-available', (ev, info) => {
-   log.info('Update not available.', info)
- })
- autoUpdater.on('error', (ev, err) => {
-   log.info('Error in auto-updater.', err)
- })
- autoUpdater.on('download-progress', (progressObj) => {
-   let log_message = "Download speed: " + progressObj.bytesPerSecond
-   log_message = log_message + ' - Downloaded ' + progressObj.percent + '%'
-   log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')'
-   log.info(log_message)
- })
- autoUpdater.on('update-downloaded', (ev, info) => {
-   log.info('Update downloaded; will install in 5 seconds', info)
-   autoUpdater.quitAndInstall();
- });
+  autoUpdater.on('checking-for-update', () => {
+    log.info('Checking for update...')
+  })
+  autoUpdater.on('update-available', (ev, info) => {
+    log.info('Update available.', info)
+  })
+  autoUpdater.on('update-not-available', (ev, info) => {
+    log.info('Update not available.', info)
+  })
+  autoUpdater.on('error', (ev, err) => {
+    log.info('Error in auto-updater.', err)
+  })
+  autoUpdater.on('download-progress', (progressObj) => {
+    let log_message = "Download speed: " + progressObj.bytesPerSecond
+    log_message = log_message + ' - Downloaded ' + progressObj.percent + '%'
+    log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')'
+    log.info(log_message)
+  })
+  autoUpdater.on('update-downloaded', (ev, info) => {
+    log.info('Update downloaded; will install in 5 seconds', info)
+    autoUpdater.quitAndInstall();
+  });
 }
 
 
@@ -49,10 +50,18 @@ app.on('ready', appReady)
 
 function appReady() {
   log.info(app.getPath('userData'))
-  menuManager.onAbout = () => { log.info('You REALLY clicked About...') }
-  menuManager.onPrefs = () => { navigate('onPrefs') }
-  menuManager.onMap = () => { navigate('onMap') }
-  menuManager.onLocations = () => { navigate('onLocations') }
+  menuManager.onAbout = () => {
+    log.info('You REALLY clicked About...')
+  }
+  menuManager.onPrefs = () => {
+    navigate('onPrefs')
+  }
+  menuManager.onMap = () => {
+    navigate('onMap')
+  }
+  menuManager.onLocations = () => {
+    navigate('onLocations')
+  }
   menuManager.onLoadLicense = onLoadLicense
 
   const menu = menuManager.build()
@@ -73,7 +82,7 @@ function appReady() {
         splashScreen.destroy()
         splashScreen = null
         autoUpdater.checkForUpdates()
-       }
+      }
     })
 
 }
@@ -113,13 +122,40 @@ function initTray() {
   }
 
   tray.setToolTip(app.getName())
-  tray.setContextMenu(menuManager.buildTrayMenu([], () => { }))
+  tray.setContextMenu(menuManager.buildTrayMenu([], () => {
+  }))
 }
 
 function initIpc() {
   ipcMain.on('Locations', (event, addresses, provisionedId) => {
     var newMenu = menuManager.buildTrayMenu(addresses, provisionedId, setLocation)
     tray.setContextMenu(newMenu)
+  })
+
+  ipcMain.on('installApp', (event, appName) => {
+    // 打印服务
+    if (appName === "printer") {
+      let p = path.join(__dirname, 'applications', 'jre', 'mac', 'Contents', 'Home', 'bin')
+      let jarPath = path.join(__dirname, 'applications')
+      serverProcess = exec(p + "/java -jar " + jarPath + "/printmanager.jar", {}, function (error, stdout, stderr) {
+      })
+    }
+    // rfid 服务
+    if (appName === 'rfid') {
+      let p = path.join(__dirname, 'applications', 'jre', 'mac', 'Contents', 'Home', 'bin')
+      let jarPath = path.join(__dirname, 'applications')
+      serverProcess = exec(p + "/java -jar " + jarPath + "/printmanager.jar", {}, function (error, stdout, stderr) {
+      })
+    }
+
+    // opc 服务
+    if (appName === 'opc') {
+      let p = path.join(__dirname, 'applications', 'jre', 'mac', 'Contents', 'Home', 'bin')
+      let jarPath = path.join(__dirname, 'applications')
+      serverProcess = exec(p + "/java -jar " + jarPath + "/printmanager.jar", {}, function (error, stdout, stderr) {
+      })
+    }
+
   })
 }
 
@@ -139,7 +175,7 @@ function createWindow() {
       title: 'M2',
       icon: path.join(iconPath, windowIcon),
       show: false,
-      webPreferences: { webSecurity: false }
+      webPreferences: {webSecurity: false}
     })
 
     // Load the index.html of the app.
@@ -191,8 +227,8 @@ function onLoadLicense() {
     title: 'Load License File',
     defaultPath: app.getPath('documents'),
     filters: [
-      { name: 'Text Files', extensions: ['txt', 'json', 'jwt'] },
-      { name: 'All Files', extensions: ['*'] }
+      {name: 'Text Files', extensions: ['txt', 'json', 'jwt']},
+      {name: 'All Files', extensions: ['*']}
     ],
     properties: ['openFile']
   }, (files) => {

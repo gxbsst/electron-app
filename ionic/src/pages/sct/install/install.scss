@@ -1,0 +1,23 @@
+install-sct {
+  ion-icon {
+    font-size: 10em;
+    color: #ff7c00;
+  }
+
+  ion-grid {
+    .row {
+      ion-item {
+        background: #2F3E46;
+        opacity: 0.95;
+        h2 {
+          color:#FFF;
+        }
+
+      }
+    }
+  }
+
+  .item-ios .item-button {
+    height: 40px;
+  }
+}

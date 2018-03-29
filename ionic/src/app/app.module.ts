@@ -58,6 +58,7 @@ export class FunDebugErrorHandler implements ErrorHandler {
 @NgModule({
     declarations: [MyApp],
     imports: [
+        NgZorroAntdModule,
         BrowserModule,
         HttpModule,
         IonicModule.forRoot(MyApp, {
@@ -68,6 +69,7 @@ export class FunDebugErrorHandler implements ErrorHandler {
         TabModule,
         HomeModule,
         CalendarModule,
+
         SctPageModule,
         DetailPageModule,
     ],

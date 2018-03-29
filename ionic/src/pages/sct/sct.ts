@@ -19,6 +19,9 @@ export class SctPage {
     constructor(public navCtrl: NavController, public navParams: NavParams) {
     }
 
+    isCollapsed = false;
+
+
     ionViewDidLoad() {
         console.log('ionViewDidLoad SctPage');
     }

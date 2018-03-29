@@ -1,0 +1,28 @@
+
+    <ion-grid>
+        <ion-row>
+            <ion-col col-4>
+                <ion-item  text-center no-lines>
+                    <ion-icon name='ios-albums-outline'></ion-icon>
+                    <h2>OPC</h2>
+                    <button (click)="install('opc')" ion-button full>安装</button>
+
+                </ion-item>
+            </ion-col>
+            <ion-col col-4>
+                <ion-item  text-center no-lines>
+                    <ion-icon name='ios-cog-outline'></ion-icon>
+                    <h2>RFID</h2>
+                    <button (click)="install('rfid')" ion-button full>安装</button>
+                </ion-item>
+            </ion-col>
+            <ion-col col-4>
+                <ion-item text-center no-lines>
+                    <ion-icon name='ios-phone-portrait-outline'></ion-icon>
+                    <h2>PRINTER</h2>
+                    <button (click)="install('printer')" ion-button full>安装</button>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>

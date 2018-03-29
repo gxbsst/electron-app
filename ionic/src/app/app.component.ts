@@ -145,7 +145,6 @@ export class MyApp {
 
     setupIpc() {
 
-    debugger
         if (this.electron.isElectronApp) {
 
             console.log('Electron shell detected.');

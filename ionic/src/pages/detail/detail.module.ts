@@ -1,15 +1,16 @@
-import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { DetailPage } from './detail';
+import {NgModule} from '@angular/core';
+import {IonicPageModule} from 'ionic-angular';
+import {DetailPage} from './detail';
 import {NgZorroAntdModule} from "ng-zorro-antd";
 
 @NgModule({
-  declarations: [
-    DetailPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(DetailPage),
-      NgZorroAntdModule
-  ],
+    declarations: [
+        DetailPage,
+    ],
+    imports: [
+        IonicPageModule.forChild(DetailPage),
+        NgZorroAntdModule
+    ],
 })
-export class DetailPageModule {}
+export class DetailPageModule {
+}
