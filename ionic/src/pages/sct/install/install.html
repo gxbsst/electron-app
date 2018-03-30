@@ -13,28 +13,21 @@
         </td>
         <td nz-td>{{data.status}}</td>
         <td nz-td>
-            <span>
-              <a href="#" (click)="install('sct')">启动</a>
-               <a href="http://localhost:8080/app">浏览</a>
-              <span nz-table-d3wsdyfriivider></span>
-              <span nz-table-divider></span>
-              <nz-dropdown>
-                <a class="ant-dropdown-link" nz-dropdown>
-                  More actions <i class="anticon anticon-down"></i>
-                </a>
-                <ul nz-menu>
-                  <li nz-menu-item>
-                    <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">1st menu item</a>
-                  </li>
-                  <li nz-menu-item>
-                    <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">2nd menu item</a>
-                  </li>
-                  <li nz-menu-item>
-                    <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">3rd menu item</a>
-                  </li>
-                </ul>
-              </nz-dropdown>
+            
+            <span *ngIf="data.status === 'closed'">
+                <button nz-button (click)="install(data.name); " [nzType]="'primary'">
+                     <span>启动</span>
+                </button>
+
             </span>
+
+            <span *ngIf="data.status === 'open'">
+                <button nz-button (click)="closeApp(data.name); " [nzType]="'primary'">
+                     <span>关闭</span>
+                </button>
+                <a href="http://localhost:8080/app">浏览</a>
+            </span>
+
         </td>
     </tr>
     </tbody>

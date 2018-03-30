@@ -38,3 +38,5 @@ dispatcher-*/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+app/applications/*
+sct

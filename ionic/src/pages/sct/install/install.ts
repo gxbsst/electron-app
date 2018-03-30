@@ -15,17 +15,22 @@ export class InstallComponent {
         {
             key: '1',
             name: 'OPC',
-            status: 'off',
+            status: 'closed',
 
         }, {
             key: '2',
             name: 'SCT',
-            status: 'off',
+            status: 'closed',
 
         }, {
             key: '3',
             name: 'RFID',
-            status: 'off',
+            status: 'closed',
+        },
+        {
+            key: '4',
+            name: 'PRINTER',
+            status: 'closed',
         }
     ];
 
@@ -35,22 +40,34 @@ export class InstallComponent {
                 private electron: ElectronService,
                 public service: ElectronIpcService,) {
 
-        this.electron.ipcRenderer.on("appSctStatus", (event, status) => {
-            this.data[0]['status'] = status
-        })
+
 
     }
 
-    showProduct(item) {
-        // let modal = this.modalCtrl.create(ProductListPage, {
-        //     dtlList: item.dtlList
-        // });
-        // modal.present();
+    ngOnInit() {
+        this.electron.ipcRenderer.on("appOPCStatus", (event, status) => {
+            this.data[0]['status'] = status
+        })
+
+        this.electron.ipcRenderer.on("appSctStatus", (event, status) => {
+            this.data[1]['status'] = status
+        })
+        this.electron.ipcRenderer.on("appRFIDStatus", (event, status) => {
+            this.data[2]['status'] = status
+        })
+
+        this.electron.ipcRenderer.on("appPrinterStatus", (event, status) => {
+            this.data[3]['status'] = status
+        })
     }
 
 
     install(name: string) {
         this.service.installApp(name)
+    }
+
+    closeApp(name: string) {
+        this.service.closeApp(name)
     }
 
 

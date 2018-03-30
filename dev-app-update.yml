@@ -1,0 +1,3 @@
+provider: 'generic'
+url: 'https://website.com/download'
+channel: 'latest'
