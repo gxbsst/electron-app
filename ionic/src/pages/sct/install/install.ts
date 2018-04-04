@@ -2,6 +2,16 @@ import {ModalController, NavController, NavParams} from "ionic-angular";
 import {Component, Input} from "@angular/core";
 import {ElectronIpcService} from "../../../service/electronipc-service";
 import {ElectronService} from "ngx-electron";
+import {CommonService} from "../../../service/CommonService";
+let portscanner = require('portscanner')
+
+// const si = require('systeminformation');
+
+// 应用端口
+const OPCPORT = 135
+const PRINTERPORT = 8099
+const SCTPORT = 8080
+const RFIDPORT = 8080
 
 @Component({
     selector: "install-sct",
@@ -38,32 +48,48 @@ export class InstallComponent {
                 public modalCtrl: ModalController,
                 public navParams: NavParams,
                 private electron: ElectronService,
+                private commonService: CommonService,
                 public service: ElectronIpcService,) {
-
 
 
     }
 
     ngOnInit() {
-        this.electron.ipcRenderer.on("appOPCStatus", (event, status) => {
-            this.data[0]['status'] = status
-        })
+        if (this.electron.ipcRenderer) {
+            // callback style
+            // si.cpu(function (data) {
+            //     console.log('CPU-Information:');
+            //     console.log(data);
+            // });
 
-        this.electron.ipcRenderer.on("appSctStatus", (event, status) => {
-            this.data[1]['status'] = status
-        })
-        this.electron.ipcRenderer.on("appRFIDStatus", (event, status) => {
-            this.data[2]['status'] = status
-        })
+            // promises style - new in version 3
+            // si.cpu()
+            //     .then(data => console.log(data))
+            //     .catch(error => console.error(error));
 
-        this.electron.ipcRenderer.on("appPrinterStatus", (event, status) => {
-            this.data[3]['status'] = status
-        })
+            this.electron.ipcRenderer.on("appOPCStatus", (event, status) => {
+                this.data[0]['status'] = status
+            })
+
+            this.electron.ipcRenderer.on("appSctStatus", (event, status) => {
+                this.data[1]['status'] = status
+            })
+            this.electron.ipcRenderer.on("appRFIDStatus", (event, status) => {
+                this.data[2]['status'] = status
+            })
+
+            this.electron.ipcRenderer.on("appPrinterStatus", (event, status) => {
+                this.data[3]['status'] = status
+            })
+        }
     }
 
 
     install(name: string) {
-        this.service.installApp(name)
+        this.commonService.startApp('SCT', (status) => {
+            this.data[1]['status'] = status
+        })
+        // this.service.installApp(name)
     }
 
     closeApp(name: string) {
@@ -71,4 +97,7 @@ export class InstallComponent {
     }
 
 
+
 }
+
+

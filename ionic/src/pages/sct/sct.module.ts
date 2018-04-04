@@ -9,6 +9,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 const appRoutes: Routes = [
     { path: 'install', component: InstallComponent },
+    { path: '', redirectTo: '/install', pathMatch: 'full' },
 ];
 
 

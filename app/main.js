@@ -1,3 +1,4 @@
+
 const {app, BrowserWindow, dialog, ipcMain, Menu, Tray} = require('electron')
 const path = require('path')
 const fs = require('fs')
@@ -7,17 +8,6 @@ const {autoUpdater} = require('electron-updater')
 let exec = require('child_process').exec;
 let spawn = require('child_process').spawn;
 const {execSync} = require('child_process');
-
-// 应用服务
-const OPC = 'WSOpcConnector.jar'
-const PRINTER = 'printmanager.jar'
-const RFID = 'rfid_manager-1.0-SNAPSHOT.jar'
-
-// 应用进程
-let opcProcess
-let rfidProcess
-let printerProcess
-let sctProcess
 
 // 应用端口
 const OPCPORT = 135
@@ -104,6 +94,8 @@ function appReady() {
         app.dock.setIcon(path.join(iconPath, 'icon.png'))
     }
 
+    startDb()
+
     checkAppsStatus()
 
     createSplashScreen()
@@ -165,76 +157,14 @@ function initIpc() {
         tray.setContextMenu(newMenu)
     })
 
+    // 启动服务
     ipcMain.on('installApp', (event, appName) => {
-        // 打印服务
-        if (appName === "PRINTER") {
 
-            printerProcess = exec(JAVACMD + ' -jar ' + APPHOME + PRINTER, {
-                cmd: APPHOME
-            }, function (error, stdout, stderr) {
-                debugger
-            })
-        }
 
-        // rfid 服务
-        if (appName === 'RFID') {
-            rfidProcess = exec(JAVACMD + ' -jar ' + APPHOME + RFID, {
-                cmd: APPHOME
-            }, function (error, stdout, stderr) {
-                debugger
-            })
-        }
+    })
 
-        // opc 服务
-        if (appName === 'OPC') {
-            opcProcess = exec(JAVACMD + ' -jar ' + APPHOME + OPC, {
-                cmd: APPHOME,
-                maxBuffer: 1024 * 5000
-            }, function (error, stdout, stderr) {
-                debugger
-            })
-        }
-
-        // sct
-        if (appName === 'SCT') {
-            if (isWindow()) {
-                execSync('./gradlew.bat undeploy setupTomcat deploy',
-                    {
-                        cwd: app.getAppPath() + '/sct/'
-                    });
-
-                exec("./catalina.bat stop", {
-                    cwd: app.getAppPath() + '/sct/deploy/tomcat/bin'
-                }, function (error, stdout, stderr) {
-                    debugger
-                })
-
-                sctProcess = exec("./catalina.bat run", {
-                    cwd: app.getAppPath() + '/sct/deploy/tomcat/bin'
-                }, function (error, stdout, stderr) {
-                    debugger
-                })
-            } else {
-                execSync('./gradlew undeploy setupTomcat deploy',
-                    {
-                        cwd: app.getAppPath() + '/sct/'
-                    });
-
-                exec("./catalina.sh stop", {
-                    cwd: app.getAppPath() + '/sct/deploy/tomcat/bin'
-                }, function (error, stdout, stderr) {
-                    debugger
-                })
-
-                sctProcess = exec("./catalina.sh run", {
-                    cwd: app.getAppPath() + '/sct/deploy/tomcat/bin'
-                }, function (error, stdout, stderr) {
-                    debugger
-                })
-            }
-
-        }
-
+    ipcMain.on('closeApp', (event, appName) => {
+        killProcess(appName, event)
     })
 }
 
@@ -355,6 +285,7 @@ function checkAppsStatus() {
 // 检查SCT是否已经启动
 function portScanner() {
     //SCT
+
     portscanner.checkPortStatus(SCTPORT, '127.0.0.1', function (error, status) {
         win.webContents.send('appSctStatus', status)
     })
@@ -371,5 +302,30 @@ function portScanner() {
     // OPC
     portscanner.checkPortStatus(OPCPORT, '127.0.0.1', function (error, status) {
         win.webContents.send('appOPCStatus', status)
+    })
+}
+
+// 关掉SCT
+function killProcess(appname, e) {
+    if (appname === 'SCT') {
+        if (platform === 'win32') {
+            spawn("cmd.exe", ["/c", "shutdown.bat"], {
+                cwd: app.getAppPath() + '/sct/deploy/tomcat/bin'
+            })
+        }
+        else {
+            spawn("./shutdown.sh", [], {
+                cwd: app.getAppPath() + '/sct/deploy/tomcat/bin'
+            })
+        }
+    }
+}
+
+function startDb() {
+    debugger
+    spawn( app.getAppPath() + '/bin/startDb.sh', [], {
+        cmd: app.getAppPath() + '/bin'
+    }, function (error, stdout, stderr) {
+        debugger
     })
 }
