@@ -28,6 +28,11 @@ let rfidProcess
 let printerProcess
 let sctProcess
 
+
+let exec = child_process.exec;
+let execSync = child_process.execSync;
+let spawn = child_process.spawn;
+
 // PATH
 const MACJAVACMD = gui.app.getAppPath() + '/app/applications/jre/mac/Contents/Home/bin/java'
 const WINDOWJAVACMD = gui.app.getAppPath() + '/app/applications/jre/win/bin/java.exe'
@@ -154,9 +159,7 @@ export class CommonService {
 
     startApp(appName, exitFunc) {
         let me = this;
-        let exec = child_process.exec;
-        let execSync = child_process.execSync;
-        let spawn = child_process.spawn;
+
 
         if (appName === 'SCT') {
 
@@ -201,6 +204,10 @@ export class CommonService {
         }
 
 
+        if(appName === 'CUBA') {
+            startCcuba()
+        }
+
         // 打印服务
         if (appName === "PRINTER") {
 
@@ -232,4 +239,45 @@ export class CommonService {
 
     }
 
+}
+
+
+// 启动cuba
+
+function startCcuba() {
+    if (this.isWin()) {
+        execSync('./gradlew.bat undeploy setupTomcat deploy',
+            {
+                cwd: gui.app.getAppPath() + '/cuba/'
+            });
+
+        exec("./catalina.bat stop", {
+            cwd: gui.app.getAppPath() + '/cuba/deploy/tomcat/bin'
+        }, function (error, stdout, stderr) {
+            debugger
+        })
+
+        let sctProcess = exec("./catalina.bat run", {
+            cwd: gui.app.getAppPath() + '/cuba/deploy/tomcat/bin'
+        }, function (error, stdout, stderr) {
+            debugger
+        })
+    } else {
+        execSync('./gradlew undeploy setupTomcat deploy',
+            {
+                cwd: gui.app.getAppPath() + '/cuba/'
+            });
+
+        exec("./catalina.sh stop", {
+            cwd: gui.app.getAppPath() + '/cuba/deploy/tomcat/bin'
+        }, function (error, stdout, stderr) {
+            debugger
+        })
+
+        let sctProcess = exec("./catalina.sh run", {
+            cwd: gui.app.getAppPath() + '/cuba/deploy/tomcat/bin'
+        }, function (error, stdout, stderr) {
+            debugger
+        })
+    }
 }

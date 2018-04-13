@@ -41,6 +41,11 @@ export class InstallComponent {
             key: '4',
             name: 'PRINTER',
             status: 'closed',
+        },
+        {
+            key: '5',
+            name: 'CUBA',
+            status: 'closed',
         }
     ];
 

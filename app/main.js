@@ -1,5 +1,5 @@
+const {app, BrowserWindow, dialog, ipcMain, Menu, Tray, MenuItem} = require('electron')
 
-const {app, BrowserWindow, dialog, ipcMain, Menu, Tray} = require('electron')
 const path = require('path')
 const fs = require('fs')
 const url = require('url')
@@ -9,11 +9,16 @@ let exec = require('child_process').exec;
 let spawn = require('child_process').spawn;
 const {execSync} = require('child_process');
 
+let template = require('./menu').template;
+let buildTrayMenu = require('./menu').buildTrayMenu;
+const menu = Menu.buildFromTemplate(template)
+
 // 应用端口
 const OPCPORT = 135
 const PRINTERPORT = 8099
 const SCTPORT = 8080
 const RFIDPORT = 8080
+const CUBAPORT = 8088
 
 // PATH
 const MACJAVACMD = app.getAppPath() + '/app/applications/jre/mac/Contents/Home/bin/java'
@@ -71,22 +76,23 @@ function initUpdater() {
 app.on('ready', appReady)
 
 function appReady() {
-    log.info(app.getPath('userData'))
-    menuManager.onAbout = () => {
-        log.info('You REALLY clicked About...')
-    }
-    menuManager.onPrefs = () => {
-        navigate('onPrefs')
-    }
-    menuManager.onMap = () => {
-        navigate('onMap')
-    }
-    menuManager.onLocations = () => {
-        navigate('onLocations')
-    }
-    menuManager.onLoadLicense = onLoadLicense
+    // log.info(app.getPath('userData'))
+    // menuManager.onAbout = () => {
+    //     log.info('You REALLY clicked About...')
+    // }
+    // menuManager.onPrefs = () => {
+    //     navigate('onPrefs')
+    // }
+    // menuManager.onMap = () => {
+    //     navigate('onMap')
+    // }
+    // menuManager.onLocations = () => {
+    //     navigate('onLocations')
+    // }
+    // menuManager.onLoadLicense = onLoadLicense
 
-    const menu = menuManager.build()
+    // const menu = menuManager.build()
+    // Menu.setApplicationMenu(menu)
     Menu.setApplicationMenu(menu)
 
     // Only MacOS will have a dock property.
@@ -147,7 +153,7 @@ function initTray() {
     }
 
     tray.setToolTip(app.getName())
-    tray.setContextMenu(menuManager.buildTrayMenu([], () => {
+    tray.setContextMenu(buildTrayMenu([], () => {
     }))
 }
 
@@ -188,7 +194,7 @@ function createWindow() {
         })
 
         // Load the index.html of the app.
-        win.loadURL('http://localhost:8100')
+        win.loadURL('http://localhost:4200')
         // win.loadURL(url.format({
         //   pathname: path.join(__dirname, './www/index.html'),
         //   protocol: 'file:',
@@ -300,8 +306,13 @@ function portScanner() {
         win.webContents.send('appPrinterStatus', status)
     })
     // OPC
-    portscanner.checkPortStatus(OPCPORT, '127.0.0.1', function (error, status) {
+    portscanner.checkPortStatus(OPCPORT, 'localhost', function (error, status) {
         win.webContents.send('appOPCStatus', status)
+    })
+
+     // CUBA
+     portscanner.checkPortStatus(CUBAPORT, '127.0.0.1', function (error, status) {
+        win.webContents.send('appCUBAStatus', status)
     })
 }
 
@@ -321,11 +332,54 @@ function killProcess(appname, e) {
     }
 }
 
+// 启动hsdb数据库
 function startDb() {
     debugger
-    spawn( app.getAppPath() + '/bin/startDb.sh', [], {
+    spawn(app.getAppPath() + '/bin/startDb.sh', [], {
         cmd: app.getAppPath() + '/bin'
     }, function (error, stdout, stderr) {
         debugger
     })
 }
+
+// 启动cuba
+
+function startCcuba() {
+    if (this.isWin()) {
+        execSync('./gradlew.bat undeploy setupTomcat deploy',
+            {
+                cwd: app.getAppPath() + '/cuba/'
+            });
+
+        exec("./catalina.bat stop", {
+            cwd: app.getAppPath() + '/cuba/deploy/tomcat/bin'
+        }, function (error, stdout, stderr) {
+            debugger
+        })
+
+        let sctProcess = exec("./catalina.bat run", {
+            cwd: app.getAppPath() + '/cuba/deploy/tomcat/bin'
+        }, function (error, stdout, stderr) {
+            debugger
+        })
+    } else {
+        execSync('./gradlew undeploy setupTomcat deploy',
+            {
+                cwd: app.getAppPath() + '/cuba/'
+            });
+
+        exec("./catalina.sh stop", {
+            cwd: app.getAppPath() + '/cuba/deploy/tomcat/bin'
+        }, function (error, stdout, stderr) {
+            debugger
+        })
+
+        let sctProcess = exec("./catalina.sh run", {
+            cwd: app.getAppPath() + '/cuba/deploy/tomcat/bin'
+        }, function (error, stdout, stderr) {
+            debugger
+        })
+    }
+}
+
+

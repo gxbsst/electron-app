@@ -300,38 +300,73 @@ class MenuManager {
   }
 
   getMacAppMenuTemplate() {
+      const name = electron.app.getName()
     return {
-      label: '',
-      submenu: [{
-        label: 'About Dispatcher',
-        click: this.onAbout
-      }, {
-        type: 'separator'
-      }, {
-        label: 'Load License...',
-        click: this.onLoadLicense
-      }, {
-        label: 'Preferences...',
-        click: this.onPrefs
-      }, {
-        type: 'separator'
-      }, {
-        role: 'services',
-        submenu: []
-      }, {
-        type: 'separator'
-      }, {
-        role: 'hide'
-      }, {
-        role: 'hideothers'
-      }, {
-        role: 'unhide'
-      }, {
-        type: 'separator'
-      }, {
-        role: 'quit'
-      }]
+        label: name,
+        submenu: [{
+            label: `关于 ${name}`,
+            role: 'about'
+        }, {
+            type: 'separator'
+        }, {
+            label: '服务',
+            role: 'services',
+            submenu: []
+        }, {
+            type: 'separator'
+        }, {
+            label: `隐藏 ${name}`,
+            accelerator: 'Command+H',
+            role: 'hide'
+        }, {
+            label: '隐藏其它',
+            accelerator: 'Command+Alt+H',
+            role: 'hideothers'
+        }, {
+            label: '显示全部',
+            role: 'unhide'
+        }, {
+            type: 'separator'
+        }, {
+            label: '退出',
+            accelerator: 'Command+Q',
+            click: function () {
+                app.quit()
+            }
+        }]
     }
+    // return {
+    //   label: '',
+    //   submenu: [{
+    //     label: 'About Dispatcher',
+    //     click: this.onAbout
+    //   }, {
+    //     type: 'separator'
+    //   }, {
+    //     label: 'Load License...',
+    //     click: this.onLoadLicense
+    //   }, {
+    //     label: 'Preferences...',
+    //     click: this.onPrefs
+    //   }, {
+    //     type: 'separator'
+    //   }, {
+    //     role: 'services',
+    //     submenu: []
+    //   }, {
+    //     type: 'separator'
+    //   }, {
+    //     role: 'hide'
+    //   }, {
+    //     role: 'hideothers'
+    //   }, {
+    //     role: 'unhide'
+    //   }, {
+    //     type: 'separator'
+    //   }, {
+    //     role: 'quit'
+    //   }]
+    // }
   }
 }
 

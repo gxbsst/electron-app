@@ -28,6 +28,7 @@
     "@angular/platform-browser": "4.4.4",
     "@angular/platform-browser-dynamic": "4.4.4",
     "@angular/router": "^5.2.9",
+    "@cuba-platform/rest": "^0.3.0",
     "@ionic-native/app-minimize": "4.3.2",
     "@ionic-native/app-version": "4.3.2",
     "@ionic-native/barcode-scanner": "4.3.2",

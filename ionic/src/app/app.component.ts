@@ -11,13 +11,16 @@ import {CommonService} from "../service/CommonService";
 import {VersionService} from "../providers/VersionService";
 import {UserInfo} from '../model/UserInfo';
 import {ElectronService} from "ngx-electron";
+import {SctPage} from "../pages/sct/sct";
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild('myNav') nav: Nav;
-  rootPage = HomePage;
+  // rootPage = HomePage;
+  rootPage = SctPage;
+
   backButtonPressed: boolean = false;
 
   constructor(private platform: Platform,
