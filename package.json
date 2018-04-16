@@ -17,7 +17,9 @@
     "package:win": "electron-packager . --icon=server/images/icon.ico --overwrite --ignore=\"(\\.(icns|md))|(.+\\.lock$)|(\\/ionic\\/)|(^\\..+$)|(typings)|((nodemon|tslint)\\.json)\"",
     "pack": "build --dir",
     "publish": "run-s build:prod icons release",
-    "release": "build -p always"
+    "release": "build -p always",
+    "copyCubaApp": "cp -rvf cuba/deploy/tomcat/webapps/* tomcat/webapps/",
+    "copyPrinterApp": "cp -rvf ws-printer-manager/deploy/tomcat/webapps/* tomcat/webapps/"
   },
   "build": {
     "appId": "com.conveyant.dispatcher",
@@ -80,6 +82,7 @@
     "tree-kill": "^1.1.0"
   },
   "devDependencies": {
+    "cpx": "^1.5.0",
     "electron": "^2.0.0-beta.5",
     "electron-builder": "^19.4.2",
     "electron-installer-dmg": "^0.2.1",

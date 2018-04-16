@@ -1,0 +1,3 @@
+[submodule "ws-printer-manager"]
+	path = ws-printer-manager
+	url = git@code.wenshidata.com:FAP-GROUP/ws-printer-manager.git
